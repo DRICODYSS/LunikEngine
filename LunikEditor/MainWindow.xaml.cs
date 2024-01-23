@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using LunikEditor.GameProject;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -19,6 +20,23 @@ namespace LunikEditor
         public MainWindow()
         {
             InitializeComponent();
+            Loaded += OnMainWindowLoaded;
+        }
+
+        private void OnMainWindowLoaded(object sender, RoutedEventArgs e)
+        {
+            Loaded -= OnMainWindowLoaded;
+            OpenProjectBrowserDialog();
+        }
+
+        private void OpenProjectBrowserDialog()
+        {
+            var ProjectBrowser = new ProjectBrowserDialog();
+            if(ProjectBrowser.ShowDialog() == false)
+            {
+                Application.Current.Shutdown();
+            }
         }
     }
+
 }
