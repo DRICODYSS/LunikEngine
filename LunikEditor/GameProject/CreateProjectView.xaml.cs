@@ -24,5 +24,10 @@ namespace LunikEditor.GameProject
         {
             InitializeComponent();
         }
+
+        private void TemplateListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
