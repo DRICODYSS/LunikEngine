@@ -5,7 +5,14 @@
 		<a:string>Content</a:string>
 		<a:string>Source</a:string>
 	</Folders>
-	
+
+	<ProjectDescription>The third person pack features a playable character where the camera is positioned behind
+and slightly above the character. As the character moves using mouse, keyboard,
+controller or virtual joystick on a touch device, the camera follows the character,
+observing from an over-the-shoulder point of view. This perspective emphasizes the main
+character and is popular in action and adventure games. The template map contains
+several objects that the player can jump upon, and push around.
+	</ProjectDescription>
 	<ProjectFile>project.Lunik</ProjectFile>
-	<ProjectType>Third person project</ProjectType>
+	<ProjectType>Third Person</ProjectType>
 </ProjectTemplate>

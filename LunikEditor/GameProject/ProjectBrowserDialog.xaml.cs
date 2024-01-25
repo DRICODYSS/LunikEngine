@@ -40,7 +40,7 @@ namespace LunikEditor.GameProject
                 if (OpenProjectButton.IsChecked == true)
                 {
                     OpenProjectButton.IsChecked = false;
-                    BrowserContent.Margin = new Thickness(-800,0,0,0);
+                    BrowserContent.Margin = new Thickness(-1200,0,0,0);
                 }
                 CreateProjectButton.IsChecked = true;
             }

@@ -1,4 +1,4 @@
-<ProjectTemplate xmlns="http://schemas.datacontract.org/2004/07/LunikEditor.GameProject"
+<ProjectTemplate xmlns="http://schemas.datacontract.org/2004/07/LunikEditor.GameProject" 
 				 xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
 	<Folders xmlns:a="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
 		<a:string>.Lunik</a:string>
@@ -6,6 +6,7 @@
 		<a:string>Source</a:string>
 	</Folders>
 	
+	<ProjectDescription>A clear empty project with no code.</ProjectDescription>
 	<ProjectFile>project.Lunik</ProjectFile>
-	<ProjectType>Empty project</ProjectType>
+	<ProjectType>Blank</ProjectType>
 </ProjectTemplate>

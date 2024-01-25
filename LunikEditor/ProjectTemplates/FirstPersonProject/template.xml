@@ -5,7 +5,15 @@
 		<a:string>Content</a:string>
 		<a:string>Source</a:string>
 	</Folders>
-	
+
+	<ProjectDescription>The first person template features a player character (represented by a pair of arms) which
+is viewed from first person perspective. The character can be moved around the level 
+using keyboard, controller or virtual joystick on a touch device. Additionally the player can
+look around using mouse, controller or virtual joystick on a touch device. The character 
+can also pick up a gun that, using mouse, controller or virtual joystick on a touch device 
+will fire a simple sphere projectile that will affect some physics objects in the level,
+whilst bounce off the arena walls.
+	</ProjectDescription>
 	<ProjectFile>project.Lunik</ProjectFile>
-	<ProjectType>First person project</ProjectType>
+	<ProjectType>First Person</ProjectType>
 </ProjectTemplate>

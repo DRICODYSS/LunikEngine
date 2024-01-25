@@ -18,6 +18,8 @@ namespace LunikEditor.GameProject
         [DataMember]
         public string ProjectType { get; set; }
         [DataMember]
+        public string ProjectDescription { get; set; }
+        [DataMember]
         public string ProjectFile { get; set; }
         [DataMember]
         public List<string> Folders { get; set; }
@@ -32,6 +34,7 @@ namespace LunikEditor.GameProject
     {
         //TODO: get the path from the installation location
         private readonly string _templatePath = @"..\..\LunikEditor\ProjectTemplates";
+
         private string _projectName = "NewProject";
         public string ProjectName
         {
@@ -59,6 +62,7 @@ namespace LunikEditor.GameProject
                 }
             }
         }
+
 
         private ObservableCollection<ProjectTemplate> _projectTemplates = new ObservableCollection<ProjectTemplate>();
         public ReadOnlyObservableCollection<ProjectTemplate> ProjectTemplates { get; }
