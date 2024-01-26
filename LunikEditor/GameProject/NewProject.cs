@@ -44,6 +44,7 @@ namespace LunikEditor.GameProject
                 if(_projectName != value)
                 {
                     _projectName = value;
+                    ValidateProjectPath();
                     OnPropertyChanged(nameof(ProjectName));
                 }
             }
@@ -58,7 +59,36 @@ namespace LunikEditor.GameProject
                 if (_projectPath != value)
                 {
                     _projectPath = value;
+                    ValidateProjectPath();
                     OnPropertyChanged(nameof(ProjectPath));
+                }
+            }
+        }
+
+        private bool _isValid;
+        public bool IsValid
+        {
+            get => _isValid;
+            set
+            {
+                if (_isValid != value)
+                {
+                    _isValid = value;
+                    OnPropertyChanged(nameof(IsValid));
+                }
+            }
+        }
+
+        private string _errorMessage;
+        public string ErrorMessage
+        {
+            get => _errorMessage;
+            set
+            {
+                if (_errorMessage != value)
+                {
+                    _errorMessage = value;
+                    OnPropertyChanged(nameof(ErrorMessage));
                 }
             }
         }
@@ -66,6 +96,86 @@ namespace LunikEditor.GameProject
 
         private ObservableCollection<ProjectTemplate> _projectTemplates = new ObservableCollection<ProjectTemplate>();
         public ReadOnlyObservableCollection<ProjectTemplate> ProjectTemplates { get; }
+
+        private bool ValidateProjectPath()
+        {
+            var path = ProjectPath;
+            if (!Path.EndsInDirectorySeparator(path))
+            {
+                path += @"\";
+            }
+            path += $@"{ProjectName}\";
+
+            IsValid = false;
+            if (string.IsNullOrWhiteSpace(ProjectName.Trim()))
+            {
+                ErrorMessage = "Type in a project name!";
+            }
+            else if (ProjectName.IndexOfAny(Path.GetInvalidFileNameChars()) != -1)
+            {
+                ErrorMessage = "Invalid Character(s) used in project name!";
+            }
+            else if (string.IsNullOrWhiteSpace(ProjectPath.Trim()))
+            {
+                ErrorMessage = "Select a valid project folder!";
+            }
+            else if (ProjectPath.IndexOfAny(Path.GetInvalidPathChars()) != -1)
+            {
+                ErrorMessage = "Invalid Character(s) used in project path!";
+            }
+            else if (Directory.Exists(path) && Directory.EnumerateFileSystemEntries(path).Any())
+            {
+                ErrorMessage = "Selected project folder already exists and is not empty.";
+            }
+            else
+            {
+                ErrorMessage = string.Empty;
+                IsValid = true;
+            }
+            return IsValid;
+        }
+
+        public string CreateProject(ProjectTemplate template)
+        {
+            if(!ValidateProjectPath())
+            {
+                return string.Empty;
+            }
+
+            if (!Path.EndsInDirectorySeparator(ProjectPath)) ProjectPath += @"\";
+            var path = $@"{ProjectPath}{ProjectName}\";
+
+            try
+            {
+                if ((Directory.Exists(path))) Directory.CreateDirectory(path);
+                foreach(var folder in template.Folders)
+                {
+                    Directory.CreateDirectory(Path.GetFullPath(Path.Combine(Path.GetDirectoryName(path), folder)));
+                }
+
+                var dirInfo = new DirectoryInfo(path + @".Lunik\");
+                dirInfo.Attributes |= FileAttributes.Hidden;
+
+                File.Copy(template.IconFilePath, Path.GetFullPath(Path.Combine(dirInfo.FullName, "Icon.png")));
+                File.Copy(template.ScreenshotFilePath, Path.GetFullPath(Path.Combine(dirInfo.FullName, "Screenshot.png")));
+
+                var projectXml = File.ReadAllText(template.ProjectFilePath);
+                projectXml = string.Format(projectXml, ProjectName, ProjectPath);
+
+                var projectPath = Path.GetFullPath(Path.Combine(path, $"{ProjectName}{Project.Extension}"));
+                File.WriteAllText(projectPath, projectXml);
+
+                return path;
+
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                // TODO: log Errors
+                return string.Empty;
+            }
+        }
+
         public NewProject()
         {
             ProjectTemplates = new ReadOnlyObservableCollection<ProjectTemplate>(_projectTemplates);
@@ -88,6 +198,7 @@ namespace LunikEditor.GameProject
 
                     _projectTemplates.Add(template);
                 }
+                ValidateProjectPath();
             }
             catch(Exception ex)
             {
