@@ -50,7 +50,7 @@ namespace LunikEditor.GameProject
             }
         }
 
-        private string _projectPath = $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\LunikProjects\";
+        private string _projectPath = $@"C:\LunikProjects\";
         public string ProjectPath
         {
             get => _projectPath;

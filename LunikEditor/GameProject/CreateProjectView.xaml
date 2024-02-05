@@ -26,14 +26,14 @@
                 </ListBox.ItemTemplate>
             </ListBox>
 
-            <StackPanel Orientation="Vertical">
+            
                 <Border Width="600" Height="350" Margin="5,0,0,0">
                     <Border.Background>
                         <ImageBrush ImageSource="{Binding SelectedItem.Screenshot, ElementName=TemplateListBox}"/>
                     </Border.Background>
                 </Border>
 
-            </StackPanel>
+           
 
         </StackPanel>
 

@@ -1,4 +1,5 @@
 ﻿using LunikEditor.GameProject;
+using System.ComponentModel;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -21,6 +22,13 @@ namespace LunikEditor
         {
             InitializeComponent();
             Loaded += OnMainWindowLoaded;
+            Closing += OnMainWindowClosing;
+        }
+
+        private void OnMainWindowClosing(object sender, CancelEventArgs e)
+        {
+            Closing -= OnMainWindowClosing;
+            Project.Current?.Unload();
         }
 
         private void OnMainWindowLoaded(object sender, RoutedEventArgs e)
@@ -32,9 +40,14 @@ namespace LunikEditor
         private void OpenProjectBrowserDialog()
         {
             var ProjectBrowser = new ProjectBrowserDialog();
-            if(ProjectBrowser.ShowDialog() == false)
+            if(ProjectBrowser.ShowDialog() == false || ProjectBrowser.DataContext == null)
             {
                 Application.Current.Shutdown();
+            }
+            else
+            {
+                Project.Current?.Unload();
+                DataContext = ProjectBrowser.DataContext;
             }
         }
     }
