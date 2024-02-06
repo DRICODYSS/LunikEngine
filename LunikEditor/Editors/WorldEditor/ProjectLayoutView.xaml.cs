@@ -1,4 +1,6 @@
-﻿using LunikEditor.GameProject;
+﻿using LunikEditor.Components;
+using LunikEditor.Editors;
+using LunikEditor.GameProject;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +26,19 @@ namespace LunikEditor.Editors
         public ProjectLayoutView()
         {
             InitializeComponent();
+        }
+
+        private void OnAddGameEntity_Button_Click(object sender, RoutedEventArgs e)
+        {
+            var btn = sender as Button;
+            var vm = btn.DataContext as Scene;
+            vm.AddGameEntityCommand.Execute(new GameEntity(vm) { Name = "Empty Game object"});
+        }
+
+        private void OnGameEntities_ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var entity = (sender as ListBox).SelectedItems[0];
+            GameEntityView.Instance.DataContext = entity;
         }
     }
 }
