@@ -9,6 +9,8 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Shapes;
+using Path = System.IO.Path;
 
 namespace LunikEditor.GameProject
 {
@@ -171,8 +173,8 @@ namespace LunikEditor.GameProject
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
-                // TODO: log Errors
-                return string.Empty;
+                Logger.Log(MessageType.Error, $"Failed to create {ProjectName}");
+                throw;
             }
         }
 
@@ -203,7 +205,8 @@ namespace LunikEditor.GameProject
             catch(Exception ex)
             {
                 Debug.WriteLine(ex.Message);
-                // TODO: log Errors
+                Logger.Log(MessageType.Error, $"Failed to read project template");
+                throw;
             }
            
         }

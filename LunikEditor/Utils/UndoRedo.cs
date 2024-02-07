@@ -26,20 +26,26 @@ namespace LunikEditor.Utils
         public UndoRedoAction(string name)
         {
             Name = name;
-
         }
 
-        public UndoRedoAction(Action undoAction, Action redoAction, string name)
+        public UndoRedoAction(Action undoAction, Action redoAction, string name) : this(name)
         {
             Debug.Assert(undoAction != null && redoAction != null);
             _undoAction = undoAction;
             _redoAction = redoAction;
             Name = name;
         }
+
+        public UndoRedoAction(string property, object instance, object undoValue, object redoValue, string name) :
+            this(
+                () => instance.GetType().GetProperty(property).SetValue(instance, undoValue),
+                () => instance.GetType().GetProperty(property).SetValue(instance, redoValue),
+                name) { }
     }
 
     public class UndoRedo
     {
+        private bool _enableAdd = true;
         private readonly ObservableCollection<IUndoRedo> _undoList = new ObservableCollection<IUndoRedo>();
         private readonly ObservableCollection<IUndoRedo> _redoList = new ObservableCollection<IUndoRedo>();
         public   ReadOnlyObservableCollection<IUndoRedo> UndoList { get; }
@@ -53,6 +59,8 @@ namespace LunikEditor.Utils
 
         public void Add(IUndoRedo cmd)
         {
+            if (!_enableAdd) return;
+
             _undoList.Add(cmd);
             _redoList.Clear();
         }
@@ -63,7 +71,9 @@ namespace LunikEditor.Utils
             {
                 var cmd = _undoList.Last();
                 _undoList.RemoveAt(_undoList.Count - 1);
+                _enableAdd = false;
                 cmd.Undo();
+                _enableAdd = true;
                 _redoList.Insert(0, cmd);
             }
         }
@@ -74,7 +84,9 @@ namespace LunikEditor.Utils
             {
                 var cmd = _redoList.First();
                 _redoList.RemoveAt(0);
+                _enableAdd = false;
                 cmd.Redo();
+                _enableAdd |= true;
                 _undoList.Add(cmd);
             }
         }

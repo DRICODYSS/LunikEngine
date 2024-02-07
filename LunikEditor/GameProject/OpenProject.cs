@@ -9,6 +9,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Shapes;
 
 namespace LunikEditor.GameProject
 {
@@ -53,7 +54,8 @@ namespace LunikEditor.GameProject
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
-                return; // TODO log errors
+                Logger.Log(MessageType.Error, "Failed to read project data");
+                throw;
             }
         }
 
