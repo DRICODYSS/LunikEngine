@@ -15,7 +15,7 @@ using static System.Formats.Asn1.AsnWriter;
 namespace LunikEditor.GameProject
 {
     [DataContract(Name = "Game")]
-    public class Project : BaseViewModel
+    class Project : BaseViewModel
     {
         public static string Extension { get; } = ".Lunik";
         [DataMember]

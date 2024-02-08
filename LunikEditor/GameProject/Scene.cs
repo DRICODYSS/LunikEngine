@@ -13,7 +13,7 @@ using System.Windows.Input;
 namespace LunikEditor.GameProject
 {
     [DataContract]
-    public class Scene : BaseViewModel
+    class Scene : BaseViewModel
     {
         private string _name;
         [DataMember]

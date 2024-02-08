@@ -8,8 +8,9 @@ using System.Threading.Tasks;
 
 namespace LunikEditor.Components
 {
+    interface IMSComponent { } 
     [DataContract]
-    public class Component : BaseViewModel
+    abstract class Component : BaseViewModel
     {
         [DataMember]
         public GameEntity Owner { get; private set; }
@@ -19,5 +20,10 @@ namespace LunikEditor.Components
             Debug.Assert(owner != null);
             Owner = owner;
         }
+    }
+
+    abstract class MSComponent<T> : BaseViewModel, IMSComponent where T : Component
+    {
+
     }
 }
