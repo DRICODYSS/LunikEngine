@@ -1,4 +1,5 @@
-﻿using LunikEditor.GameProject;
+﻿using LunikEditor.DLLWrapper;
+using LunikEditor.GameProject;
 using LunikEditor.Utils;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,42 @@ namespace LunikEditor.Components
     [KnownType(typeof(Transform))]
     class GameEntity : BaseViewModel
     {
+        private int _entityID = ID.INVALID_ID;
+        public int EntityID
+        {
+            get => _entityID;
+            set
+            {
+                if (_entityID != value)
+                {
+                    _entityID = value;
+                    OnPropertyChanged(nameof(EntityID));
+                }
+            }
+        }
+        private bool _isActive;
+        public bool IsActive
+        {
+            get => _isActive;
+            set
+            {
+                if (_isActive != value)
+                {
+                    _isActive = value;
+                    if (_isActive )
+                    {
+                        EntityID = EngineAPI.CreateGameEntity(this);
+                        Debug.Assert(ID.IsValid(_entityID));
+                    }
+                    else
+                    {
+                        EngineAPI.RemoveGameEntity(this);
+                    }
+                    OnPropertyChanged(nameof(IsActive));
+                }
+            }
+        }
+
         private bool _isEnabled = true;
         [DataMember]
         public bool IsEnabled
@@ -53,6 +90,9 @@ namespace LunikEditor.Components
         [DataMember(Name = nameof(Components))] 
         private readonly ObservableCollection<Component> _components = new ObservableCollection<Component>();
         public ReadOnlyObservableCollection<Component> Components { get; private set; }
+
+        public Component GetComponent(Type type) => Components.FirstOrDefault(c=>c.GetType() == type);
+        public T GetComponent<T>() where T : Component => GetComponent(typeof(T)) as T;
 
         [OnDeserialized]
         private void OnDeserialized(StreamingContext context)

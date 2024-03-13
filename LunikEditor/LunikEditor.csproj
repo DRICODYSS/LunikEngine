@@ -11,4 +11,29 @@
     <BaseOutputPath>..\x64\</BaseOutputPath>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Icons\**" />
+    <EmbeddedResource Remove="Icons\**" />
+    <None Remove="Icons\**" />
+    <Page Remove="Icons\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Editors\WorldEditor\Icons\icons8-redo-32.png" />
+    <None Remove="Editors\WorldEditor\Icons\icons8-save-48.png" />
+    <None Remove="Editors\WorldEditor\Icons\icons8-undo-32.png" />
+    <None Remove="Editors\WorldEditor\Icons\icons8-undo-96.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Editors\WorldEditor\Icons\icons8-redo-32.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Editors\WorldEditor\Icons\icons8-save-48.png" />
+    <Resource Include="Editors\WorldEditor\Icons\icons8-undo-32.png" />
+    <Resource Include="Editors\WorldEditor\Icons\icons8-undo-96.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
 </Project>

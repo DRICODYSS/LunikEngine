@@ -54,15 +54,25 @@ namespace LunikEditor.GameProject
         public ICommand AddGameEntityCommand { get; private set; }
         public ICommand RemoveGameEntityCommand { get; private set; }
 
-        private void AddGameEntity(GameEntity entity)
+        private void AddGameEntity(GameEntity entity, int index = -1)
         {
             Debug.Assert(!_gameEntities.Contains(entity));
-            _gameEntities.Add(entity);
+            entity.IsActive = IsActive;
+            if(index == -1)
+            {
+                _gameEntities.Add(entity);
+            }
+            else
+            {
+                _gameEntities.Insert(index, entity);
+            }
+            
         }
 
         private void RemoveGameEntity(GameEntity entity)
         {
             Debug.Assert(_gameEntities.Contains(entity));
+            entity.IsActive = false;
             _gameEntities.Remove(entity);
         }
 
@@ -75,13 +85,18 @@ namespace LunikEditor.GameProject
                 OnPropertyChanged(nameof(GameEntities));
             }
 
+            foreach (var entity in _gameEntities)
+            {
+                entity.IsActive = IsActive;
+            }
+
             AddGameEntityCommand = new RelayCommand<GameEntity>(x =>
             {
                 AddGameEntity(x);
                 var entityIndex = _gameEntities.Count - 1;
                 Project.UndoRedo.Add(new UndoRedoAction(
                     () => RemoveGameEntity(x),
-                    () => _gameEntities.Insert(entityIndex, x),
+                    () => AddGameEntity(x, entityIndex),
                     $"Add {x.Name} to {Name}"));
             });
 
@@ -90,7 +105,7 @@ namespace LunikEditor.GameProject
                 var entityIndex = _gameEntities.IndexOf(x);
                 RemoveGameEntity(x);
                 Project.UndoRedo.Add(new UndoRedoAction(
-                    () => _gameEntities.Insert(entityIndex, x),
+                    () => AddGameEntity(x, entityIndex),
                     () => RemoveGameEntity(x),
                     $"Remove {x.Name}"));
             });
