@@ -1,0 +1,18 @@
+<ProjectTemplate xmlns="http://schemas.datacontract.org/2004/07/LunikEditor.GameProject"
+				 xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Folders xmlns:a="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
+		<a:string>.Lunik</a:string>
+		<a:string>Content</a:string>
+		<a:string>Source</a:string>
+	</Folders>
+
+	<ProjectDescription>The third person pack features a playable character where the camera is positioned behind
+and slightly above the character. As the character moves using mouse, keyboard,
+controller or virtual joystick on a touch device, the camera follows the character,
+observing from an over-the-shoulder point of view. This perspective emphasizes the main
+character and is popular in action and adventure games. The template map contains
+several objects that the player can jump upon, and push around.
+	</ProjectDescription>
+	<ProjectFile>project.Lunik</ProjectFile>
+	<ProjectType>Third Person</ProjectType>
+</ProjectTemplate>

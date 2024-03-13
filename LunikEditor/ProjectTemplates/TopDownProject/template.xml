@@ -1,0 +1,17 @@
+<ProjectTemplate xmlns="http://schemas.datacontract.org/2004/07/LunikEditor.GameProject"
+				 xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Folders xmlns:a="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
+		<a:string>.Lunik</a:string>
+		<a:string>Content</a:string>
+		<a:string>Source</a:string>
+	</Folders>
+
+	<ProjectDescription>The top down template features a playable character where the camera is positioned
+behind and above the avatar at greater distance than in third person perspective. 
+The player is controlled by using the mouse or touchscreen to click on the required 
+destination and uses the navigation system to facilitate the character movement. 
+This perspective is often used in action role playing games.
+	</ProjectDescription>
+	<ProjectFile>project.Lunik</ProjectFile>
+	<ProjectType>Top Down</ProjectType>
+</ProjectTemplate>

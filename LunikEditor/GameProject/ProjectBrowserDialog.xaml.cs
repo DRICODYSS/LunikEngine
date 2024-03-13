@@ -22,6 +22,17 @@ namespace LunikEditor.GameProject
         public ProjectBrowserDialog()
         {
             InitializeComponent();
+            Loaded += OnProjectBrowserDialogLoaded;
+        }
+        private void OnProjectBrowserDialogLoaded(object sender, RoutedEventArgs e)
+        {
+            Loaded -= OnProjectBrowserDialogLoaded;
+            if(!OpenProject.Projects.Any())
+            {
+                OpenProjectButton.IsEnabled = false;
+                openProjectView.Visibility = Visibility.Hidden;
+                OnToggleButton_Click(CreateProjectButton, new RoutedEventArgs());
+            }
         }
 
         private void OnToggleButton_Click(object sender, RoutedEventArgs e)
@@ -40,7 +51,7 @@ namespace LunikEditor.GameProject
                 if (OpenProjectButton.IsChecked == true)
                 {
                     OpenProjectButton.IsChecked = false;
-                    BrowserContent.Margin = new Thickness(-800,0,0,0);
+                    BrowserContent.Margin = new Thickness(-1200,0,0,0);
                 }
                 CreateProjectButton.IsChecked = true;
             }

@@ -5,23 +5,65 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LunikEditor.GameProject"
         mc:Ignorable="d" ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
-        Title="Projects Browser" Height="600" Width="800">
-    <Grid>
+        Title="Projects Browser" Height="850" Width="1200"
+        Style="{StaticResource LunikDialogStyle}">
+
+    <Window.Resources>
+        <Style TargetType="{x:Type ToggleButton}">
+            <Setter Property="FontSize" Value="32"/>
+            <Setter Property="FontFamily" Value="Moon"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{StaticResource Editor.Disabled.FontColorBrush}"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ToggleButton}">
+                        <TextBlock Text="{TemplateBinding Button.Content}" Style="{x:Null}">
+                            <TextBlock.Effect>
+                                <DropShadowEffect BlurRadius="2" ShadowDepth="1" Opacity="0.6"/>
+                            </TextBlock.Effect>
+                        </TextBlock>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Background" Value="{StaticResource Editor.Window.GrayBrush4}"/>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter Property="Foreground"  Value="White"/>
+                            </Trigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsMouseOver" Value="True"/>
+                                    <Condition Property="IsChecked" Value="False"/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="Foreground" Value="{StaticResource Editor.FontColorBrush}"/>
+                            </MultiTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    
+    <Grid Background="{StaticResource Editor.Window.GrayBrush2}" Margin="0,15,0,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
-            <RowDefinition />
+            <RowDefinition Height="850" />
         </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="20">
-            <ToggleButton Content="Open project" x:Name="OpenProjectButton" FontSize="32" 
+        <StackPanel Orientation="Horizontal"  HorizontalAlignment="Center" Margin="20">
+            
+            <ToggleButton Content="OPEN PROJECT" x:Name="OpenProjectButton" FontSize="32" 
                           Click="OnToggleButton_Click" IsChecked="True"/>
-            <ToggleButton Content="Create project" x:Name="CreateProjectButton" FontSize="32" Margin="30,0,0,0" 
+            <ToggleButton Content="NEW PROJECT" x:Name="CreateProjectButton" FontSize="32" Margin="30,0,0,0" 
                           Click="OnToggleButton_Click" IsChecked="False"/>
         </StackPanel>
 
-        <StackPanel Orientation="Horizontal" Grid.Row="1" x:Name="BrowserContent">
-            <local:OpenProjectView />
-            <local:CreateProjectView />
+        <StackPanel Orientation="Horizontal" Grid.Row="1" x:Name="BrowserContent" Margin="0,0,0,102">
+            <local:OpenProjectView x:Name="openProjectView"/>
+            <local:CreateProjectView x:Name="createProjectView"/>
         </StackPanel>
     </Grid>
 </Window>
